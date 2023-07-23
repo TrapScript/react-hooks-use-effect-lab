@@ -5,6 +5,22 @@ function Question({ question, onAnswered }) {
 
   // add useEffect code
 
+  useEffect() => {
+    let timer;
+
+    if (timeRemaining > 0) {
+      timer = setTimeout(() => {
+        setTimeRemaining(prevTime => prevTime - 1);
+      }, 1000);
+    } else {
+      setTimeRemaining(10);
+      onAnswered(false);
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [timeRemaining, onAnswered];
+
   function handleAnswer(isCorrect) {
     setTimeRemaining(10);
     onAnswered(isCorrect);
